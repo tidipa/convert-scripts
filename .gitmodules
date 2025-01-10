@@ -1,0 +1,6 @@
+[submodule "World-Tipitaka"]
+	path = World-Tipitaka
+	url = https://github.com/yuttadhammo/World-Tipitaka.git
+[submodule "bilara-data"]
+	path = bilara-data
+	url = https://github.com/suttacentral/bilara-data.git
