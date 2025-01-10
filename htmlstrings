@@ -1,0 +1,263 @@
+<article class='range' id='X'><header><ul><li class='division'>{}</li></ul>
+<article id='X' data-counter='X'><section class='patimokkha'><p class='rule'>{}</p>
+<article id='X' data-counter='X'><section class='patimokkha'><p class='rule'>{}</p></section></article>
+<article id='X' data-split='epub'><header><ul><li class='collection'>{}</li>
+<article id='X' data-split='epub'><header><ul><li class='division'>{}</li>
+<article id='X' data-split='epub'><header><ul><li class='division'>{}</li></ul>
+<article id='X'><blockquote class='gatha'><p><span class='verse-line'>{}</span>
+<article id='X'><h2 class='sutta-title'>{}</h2>
+<article id='X'><header><ul><li class='collection'>{}</li>
+<article id='X'><header><ul><li class='division'>{}</li>
+<article id='X'><header><ul><li class='division'>{}</li></ul>
+<article id='X'><p data-counter='X'>{}
+<article id='X'><p data-counter='X'>{}</p>
+<article id='X'><p data-counter='X'>{}</p></article>
+<article id='X'><p>{}
+<article id='X'><p>{}</p>
+<article id='X'><p>{}</p></article>
+<article id='X'><p>{}</p></article></section>
+<article id='X'><section class='nidana'><h2 class='inserted-heading'>{}</h2>
+<article id='X'><section class='patimokkha'><p class='rule'>{}
+<article id='X'><section class='patimokkha'><p class='rule'>{}</p></section></article>
+<article id='X'><section class='patimokkha'><p>{}</p>
+<article><p class='add'>{}</p></article></section>
+<blockquote class='gatha'><p data-counter='X'><span class='verse-line'>{}</span>
+<blockquote class='gatha'><p data-counter='X'>{}<br>
+<blockquote class='gatha'><p><span class='speaker'>{}</span>
+<blockquote class='gatha'><p><span class='verse-line'>{}</span>
+<blockquote class='gatha'><p>{}</p></blockquote>
+<blockquote class='uddanagatha'><p><a class='sc'></a><span class='verse-line'>{}</span>
+<blockquote class='uddanagatha'><p><span class='verse-line'>{}</span>
+<blockquote class='vagguddanagatha'><p><span class='verse-line'>{}</span>
+<dd><hr><p>{}
+<dd><p data-counter='X'>{}
+<dd><p>{}
+<dd><p>{}</p>
+<dd>{}
+<dd>{} 
+<dd>{}</dd>
+<dd>{}</dd></dl>
+<dd>{}</dd></dl></section>
+<dd>{}<p>
+<div class='uddana'><p>{}</p>
+<dl><dt>{}
+<dl><dt>{}</dt>
+<dt>{}
+<dt>{}</dt>
+<h1 class='range-title'>{}</h1></header>
+<h1 class='sutta-title'>{}</h1></header>
+<h2 class='inserted-heading help-heading'>{}</h2>
+<h2 class='inserted-heading'>{}</h2>
+<h2 class='sutta-title'>{}</h2>
+<h2 class=inserted-heading’>{}</h2>
+<h2 class=’inserted-heading’>{}</h2>
+<h2>{}</h2>
+<h3 class='inserted-heading help-heading'>{}</h3>
+<h3 class='inserted-heading nidana'>{}</h3>
+<h3 class='inserted-heading pannatti'>{}</h3>
+<h3 class='inserted-heading'>{}</h3>
+<h3>{}</h3>
+<h4 class='inserted-heading'>{}</h4>
+<h4>{}</h4>
+<h5 class='inserted-heading help-heading'>{}</h5>
+<h5 class='inserted-heading'>{}</h5>
+<h5>{}</h5>
+<h6>{}</h6>
+<hr><dl><dt>{}</dt>
+<hr><dt>{}
+<hr><p data-counter='X'>{}
+<hr><p data-counter='X'>{}</p>
+<hr><p>{}
+<hr><p>{}</p>
+<hr><p>{}</p></section>
+<hr><section class='cakka'><p>{}
+<hr><section class='suttanta'><p>{}
+<hr><section class='vinaya-vinita'><p>{}
+<li class='division'>{}</li>
+<li class='division'>{}</li></ul>
+<li class='kanda'>{}</li>
+<li class='kanda'>{}</li></ul>
+<li class='nipata'>{}</li>
+<li class='pannasaka'>{}</li>
+<li class='rule'>{}
+<li class='rule'>{}</li>
+<li class='rule'>{}</li></ol>
+<li class='rule'>{}</li></ul>
+<li class='subdivision'>{}</li></ul>
+<li class='vagga'>{}</li></ul>
+<li data-counter='X'>{}
+<li data-counter='X'>{}</li>
+<li data-counter='X'>{}</li></ol>
+<li value='X'>{}</li>
+<li value='X'>{}</li></ol>
+<li><p class='rule'>{}</p></li></ul>
+<li>{}
+<li>{} 
+<li>{}</li>
+<li>{}</li></ol>
+<li>{}</li></ol></section>
+<li>{}</li></ul>
+<ol><li class='rule'>{}
+<ol><li class='rule'>{}</li>
+<ol><li>{}
+<ol><li>{}</li>
+<p class='end'>{}</p>
+<p class='end'>{}</p></article>
+<p class='end'>{}</p></article></section>
+<p class='end'>{}</p></section>
+<p class='endbook'><a class='sc'></a>{}</p>
+<p class='endbook'><a class='sc'></a>{}</p></article>
+<p class='endbook'>{}</p>
+<p class='endbook'>{}</p></article>
+<p class='endbook'>{}</p></article></section>
+<p class='endbook>{}</p>
+<p class='endkanda'>{}</p>
+<p class='endkanda'>{}</p></article>
+<p class='endkanda'>{}</p></article></section>
+<p class='endkanda'>{}</p></section></article>
+<p class='endsection'>{}</p>
+<p class='endsection'>{}</p></article>
+<p class='endsection'>{}</p></article></section>
+<p class='endsutta'>{}</p>
+<p class='endsutta'>{}</p></article>
+<p class='endsutta'>{}</p></article></section>
+<p class='endsutta'>{}</p></section>
+<p class='endsutta'>{}</p></section></article>
+<p class='endsutta'>{}<br>
+<p class='endvagga'>{}</p>
+<p class='endvagga'>{}</p></article>
+<p class='endvagga'>{}</p></article></section>
+<p class='endvagga>{}</p>
+<p class='expansion-instructions'>{}
+<p class='expansion-instructions'>{}</p>
+<p class='expansion-instructions'>{}</p></article>
+<p class='expansion-instructions'>{}</p></article></section>
+<p class='namo'><a class='sc'></a>{}</p>
+<p class='namo'>{}</p>
+<p class='rule' data-counter='X'>{}
+<p class='rule' data-counter='X'>{}</p>
+<p class='rule' data-counter='X'>{}</p></section></article>
+<p class='rule'>{}
+<p class='rule'>{} 
+<p class='rule'>{}</p>
+<p class='rule'>{}</p></section>
+<p class='rule'>{}</p></section></article>
+<p class='subrule'>{}</p>
+<p class='uddana'>{}
+<p class='uddana'>{}</p>
+<p class='uddana'>{}</p></article>
+<p class='uddana-intro'><a class='sc'></a>{}</p>
+<p class='uddana-intro'>{}</p>
+<p class='uddana-intro'>{}</p></blockquote>
+<p counter='13|2'>{}</p>
+<p data-counter='X' class='endsutta'>{}</p>
+<p data-counter='X' class='rule'>{}</p>
+<p data-counter='X'><span class='verse-line'>{}</span>
+<p data-counter='X'>{}
+<p data-counter='X'>{}</p>
+<p data-counter='X'>{}</p></article>
+<p data-counter='X'>{}<br>
+<p data-direction='forward'>{}</p>
+<p data-direction='forward'>{}</p></article>
+<p data-direction='reverse' data-counter='X'>{}</p>
+<p data-direction='reverse'>{}</p>
+<p data-direction='reverse'>{}</p></article>
+<p data-doxy='heterodox'>{}
+<p data-doxy='orthodox'>{}
+<p></p>
+<p><i>{}</i></p>
+<p><p>{}
+<p><span class='evam'>{}</span>
+<p><span class='evam'>{}</span></p>
+<p><span class='pe'>{}</span></p>
+<p><span class='pe'>{}</span></p></article>
+<p><span class='speaker'>{}</span>
+<p><span class='verse-line'>{}</span>
+<p><span class='verse-line'>{}</span></p>
+<p>{}
+<p>{} 
+<p>{}</p>
+<p>{}</p></article>
+<p>{}</p></dd>
+<p>{}</p></section>
+<section class='anapatti'><h2 class='inserted-heading'>{}</h2>
+<section class='cakka'><h2 class='inserted-heading'>{}</h2>
+<section class='cakka'><p>{}
+<section class='formal-statement'><p>{}
+<section class='formal-statement'><p>{}</p>
+<section class='formal-statement'><p>{}</p></section>
+<section class='formal-statement'><p>{}</p></section></dd></dl></section></section>
+<section class='formal-statement'><p>{}</p></section></section>
+<section class='jataka'><p>{}
+<section class='kamma'><p data-counter='X'>{}
+<section class='kamma'><p>{}
+<section class='kamma'><p>{} 
+<section class='kamma'><p>{}</p>
+<section class='nidana'><h2 class='inserted-heading'>{}</h2>
+<section class='nidana'><h2>{}</h2>
+<section class='nidana'><h3>{}</h3>
+<section class='padabhajaniya'><dl><dt>{}</dt>
+<section class='padabhajaniya'><h2 class='inserted-heading'>{}</h2>
+<section class='padabhajaniya'><h3 class='inserted-heading'>{}</h3>
+<section class='patimokkha'><h2 class='inserted-heading'>{}</h2>
+<section class='patimokkha'><p>{}
+<section class='patimokkha'><p>{} 
+<section class='patimokkha'><p>{}</p></section>
+<section class='patimokkha'><section class='kamma'><p>{}
+<section class='range'  id='X'><header><ul><li class='division'>{}</li>
+<section class='range' id='X'><header><ul><li class='collection'>{}</li>
+<section class='range' id='X'><header><ul><li class='division'>{}</li>
+<section class='range' id='X'><header><ul><li class='division'>{}</li></ul>
+<section class='suttanta'><blockquote class='gatha'><p><span class='verse-line'>{}</span>
+<section class='suttanta'><h2>{}</h2>
+<section class='suttanta'><ol><li>{}
+<section class='suttanta'><ol><li>{}</li>
+<section class='suttanta'><p>{}
+<section class='suttanta'><p>{}</p>
+<section class='uddana'><p class='uddana-intro'>{}</p>
+<section class='vinaya-vinita'><p>{}
+<section class='vinaya-vinita'><section class='uddana'><p class='uddana-intro'>{}</p>
+<span class='pe'>{}</span> 
+<span class='pe'>{}</span></p>
+<span class='pe'>{}</span></p></section>
+<span class='speaker'>{}</span>
+<span class='speaker'>{}</span></p></blockquote>
+<span class='subrule'>{}
+<span class='subrule'>{}</span></p>
+<span class='verse-line'>{}</span>
+<span class='verse-line'>{}</span></p>
+<span class='verse-line'>{}</span></p></blockquote>
+<span class='verse-line'>{}</span></p></blockquote></article>
+<span class='verse-line'>{}</span></p></blockquote></article></section>
+<span class='verse-line'>{}</span></p></blockquote></div>
+<span class='verse-line'>{}</span></p></blockquote></section>
+<span class='verse-line'>{}</span></p></blockquote></section></article>
+<ul><li class='rule'>{}
+<ul><li class='rule'>{}</li>
+<ul><li>{}
+<ul><li>{}</li>
+{}
+{} 
+{}</dd>
+{}</dd></dl>
+{}</dd></dl></section>
+{}</dt>
+{}</li>
+{}</li></ol>
+{}</li></ol></dd>
+{}</li></ol></section>
+{}</li></ul>
+{}</p>
+{}</p></article>
+{}</p></article></section>
+{}</p></blockquote>
+{}</p></dd>
+{}</p></dd></dl>
+{}</p></dd></dl></section>
+{}</p></p>
+{}</p></section>
+{}</p></section></dd>
+{}</p></section></dd></dl></section>
+{}</p></section></section>
+{}</span></p>
+{}<br>

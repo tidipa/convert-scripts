@@ -169,3 +169,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+sc-html/
+sc-markdown/
+wt-html/
+wt-markdown/
