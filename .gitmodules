@@ -4,3 +4,6 @@
 [submodule "bilara-data"]
 	path = bilara-data
 	url = https://github.com/suttacentral/bilara-data.git
+[submodule "tipitaka2500.github.io"]
+	path = tipitaka2500.github.io
+	url = https://github.com/tipitaka2500/tipitaka2500.github.io
