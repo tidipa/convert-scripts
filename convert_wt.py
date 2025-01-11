@@ -1,6 +1,7 @@
 import xml.etree.ElementTree as ET
 import html
 import os
+import re
 from bs4 import BeautifulSoup
 import markdownify
 
@@ -16,9 +17,11 @@ def tohtml(xml_path, output_path):
         
         # Convert HTML entities to literal characters
         converted_content = html.unescape(data_content)
-        
+        replaced_links = re.sub(r'<li\sname="([^"]+)">\s*<a\shref="javascript:void\(0\)"\sonclick="outD\(([^\)]+)\)">([^<]+)</a>\s*</li>', r'<li name="\1"><a href="/tipitaka/data/\2.html">\3</a></li>', converted_content)
+        replaced_links = re.sub(r'<a\shref="javascript:void\(0\)"\s+onclick="([^"]+)"\sid="([^"]+)"\sname="([^"]+)"\stitle="([^"]+)">(?:<< )?([^<>]+)(?:>>)?</a>', r'<a href="/tipitaka/data/\3.html" id="\2">\5</a>', replaced_links)
+        html_output = replaced_links
         # Pretty print the HTML content
-        soup = BeautifulSoup(converted_content, 'html.parser')
+        soup = BeautifulSoup(html_output, 'html.parser')
         pretty_html = soup.prettify()
         
         # Write the result to the output file
@@ -66,9 +69,8 @@ def wt_markdown(html_dir, markdown_dir):
 
 if __name__ == "__main__":
     xml_dir = "World-Tipitaka/tipitaka"
-    output_dir = "wt-html"
+    output_dir = "wt-html/tipitaka"
     convert_texts(xml_dir, output_dir)
 
-    html_dir = "wt-html"
     markdown_dir = "wt-markdown"
-    wt_markdown(html_dir, markdown_dir)
+    # wt_markdown(output_dir, markdown_dir)
