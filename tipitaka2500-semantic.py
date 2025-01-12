@@ -7,6 +7,7 @@ import re
 from bs4 import BeautifulSoup
 
 from links import exceptions, linkdict, namedict
+from html_template import html_header, html_footer
 
 def get_data(xml_path):
     tree = ET.parse(xml_path)
@@ -41,8 +42,10 @@ def tohtml(xml_path, output_path):
     # Hack to add .html to all links
     replaced_links = re.sub(r'href="/([^"]+)"', r'href="/\1.html"', replaced_links)
 
+    html_output = html_header + replaced_links + html_footer
+
     # Pretty print the HTML content
-    soup = BeautifulSoup(replaced_links, 'html.parser')
+    soup = BeautifulSoup(html_output, 'html.parser')
     pretty_html = soup.prettify()
 
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
@@ -52,7 +55,7 @@ def tohtml(xml_path, output_path):
 
 if __name__ == "__main__":
     xml_dir = "World-Tipitaka/tipitaka"
-    dst_dir = "wt-semantic"
+    dst_dir = "tipitaka2500.github.io"
 
     for link, path in linkdict.items():
         if link in exceptions:
