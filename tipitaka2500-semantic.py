@@ -57,18 +57,20 @@ if __name__ == "__main__":
     xml_dir = "World-Tipitaka/tipitaka"
     dst_dir = "tipitaka2500.github.io"
 
+    print("Converting subdirs")
     for link, path in linkdict.items():
         if link in exceptions:
             continue
 
         xml_path = os.path.join(xml_dir, "data", link + ".xml")
         output_path = os.path.join(dst_dir, path[1:] + ".html")
-        print(f"Converting {xml_path} to {output_path}")     
+        # print(f"Converting {xml_path} to {output_path}")     
         tohtml(xml_path, output_path)
 
+    print("Converting menus")
     for file in os.listdir(xml_dir):
         if file.endswith(".xml"):
             xml_path = os.path.join(xml_dir, file)
             output_path = os.path.join(dst_dir, "tipitaka", os.path.splitext(file)[0] + ".html")
-            print(f"Converting {xml_path} to {output_path}")
+            # print(f"Converting {xml_path} to {output_path}")
             tohtml(xml_path, output_path)

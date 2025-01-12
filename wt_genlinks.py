@@ -1,3 +1,4 @@
+from hmac import new
 from posixpath import basename
 import xml.etree.ElementTree as ET
 import html
@@ -139,6 +140,8 @@ namedict = {
 newlinkdict = {}
 newnamedict = {}
 
+pathdict = {}
+
 def get_data(xml_path):
     tree = ET.parse(xml_path)
     root = tree.getroot()
@@ -178,8 +181,22 @@ if __name__ == "__main__":
                 )
 
                 for link in links:
-                    linkdict.update({link[1]: link[0]})
+                    path = link[0]
+
+                    if path.startswith("data/"):
+                        path = path[5:]
+
+                    # Make sure links are consistent
+                    if link[1] in linkdict:
+                        if path != linkdict[link[1]]:
+                            print(f"link {link[1]}: {path} != {linkdict[link[1]]}")
+                    linkdict.update({link[1]: path})
                     namedict.update({link[1]: link[2]})
+                    if path in pathdict:
+                        if link[1] != pathdict[path]:
+                            print(f"path {path}: {link[1]} != {pathdict[path]}")
+                    pathdict.update({path: link[1]})
+
 
     for subdir, _, files in os.walk(os.path.join(xml_dir, "data")):
         for file in files:
@@ -200,9 +217,13 @@ if __name__ == "__main__":
                     id = re.findall(r'<div\sclass="q"\sid="([^"]+)">', data)
                     name = re.findall(r'<div\sclass="i">([^<]+)</div>', data)[0]
                     if path[1] == "Home":
-                        linkdict.update(
-                            {link: id[0].replace("p_", "/tipitaka/").replace("_", "/")}
-                        )
+                        newpath = re.sub(r'p_([^_]+)_1', r'/tipitaka/\1/0', id[0])
+                        # newpath = id[0].replace("p_", "/tipitaka/").replace("_", "/")
+                        # Make sure path not already used
+                        if newpath in pathdict:
+                            if link != pathdict[newpath]:
+                                print(f"path {newpath}: {link} != {pathdict[newpath]}")
+                        linkdict.update({link: newpath})
                         namedict.update({link: name})
                     else:
                         if name[0] == " ":
