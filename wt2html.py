@@ -1,41 +1,35 @@
+from hmac import new
+from posixpath import basename
 import xml.etree.ElementTree as ET
 import html
-import sys
 import os
+import re
 from bs4 import BeautifulSoup
-
-def extract_and_convert(file_path):
-    tree = ET.parse(file_path)
-    root = tree.getroot()
-    
-    # Find the <data> tag
-    data_tag = root.find('data')
-    if data_tag is not None:
-        # Extract the text content of the <data> tag
-        data_content = data_tag.text
-        
-        # Convert HTML entities to literal characters
-        converted_content = html.unescape(data_content)
-        
-        # Pretty print the HTML content
-        soup = BeautifulSoup(converted_content, 'html.parser')
-        pretty_html = soup.prettify()
-        
-        # Determine the output file path
-        base_name = os.path.basename(file_path)
-        output_file_path = os.path.splitext(base_name)[0] + '.html'
-        
-        # Write the result to the output file
-        with open(output_file_path, 'w') as output_file:
-            output_file.write(pretty_html)
-        
-        print(f"Output written to {output_file_path}")
-    else:
-        print(f"No <data> tag found in the XML file: {file_path}")
+from get_data import get_data
+from links import exceptions
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python wt2html.py <path_to_xml_file1> <path_to_xml_file2> ...")
-    else:
-        for file_path in sys.argv[1:]:
-            extract_and_convert(file_path)
+    xml_dir = "World-Tipitaka/tipitaka"
+    dst_dir = "wt-html"
+    for subdir, _, files in os.walk(xml_dir):
+        for file in files:
+            if file.endswith(".xml"):
+                link = basename(file).split(".")[0]
+
+                if link in exceptions:
+                    continue
+            
+                xml_path = os.path.join(subdir, file)
+                data = get_data(xml_path)
+                
+                # Pretty print the HTML content
+                soup = BeautifulSoup(data, 'html.parser')
+                pretty_html = soup.prettify()
+
+                output_path = os.path.splitext(xml_path)[0] + ".md"
+                output_path = output_path.replace(xml_dir, dst_dir)
+                os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+                # Write the result to the output file
+                with open(output_path, 'w') as output_file:
+                    output_file.write(pretty_html)

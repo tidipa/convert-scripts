@@ -8,9 +8,9 @@ exceptions = [
 linkdict = {
     "271577": "/tipitaka/2V/1",
     "271576": "/tipitaka/1V/1",
-    "262626": "/tipitaka/36P1/3/3.7/3.7.4/Nahetuduka/Catuvisaka",
+    "262626": "/tipitaka/36P1/3/3.7/3.7.4/Nahetuduka/Catuvisaka_sakamma",
     "265995": "/tipitaka/39P3/3/3.1/3.1.1/3.1.1.1--7/Paccayacatukka/Hetu",
-    "262625": "/tipitaka/36P1/3/3.7/3.7.4/Nahetuduka/Catuvisaka",
+    "262625": "/tipitaka/36P1/3/3.7/3.7.4/Nahetuduka/Catuvisaka_saupanissaya",
     "260803": "/tipitaka/37P1/12/12.7/12.7.4/12.7.4",
     "265990": "/tipitaka/39P3/2/2.6/2.6.1/2.6.1.1--7/Paccayacatukka/Hetu",
     "262557": "/tipitaka/36P1/2/2.7/2.7.4/Navippayuttaduka/Bavisaka",

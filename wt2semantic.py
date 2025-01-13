@@ -1,26 +1,9 @@
-from posixpath import basename
-import xml.etree.ElementTree as ET
-import html
 import os
 import re
-# import shutil
 from bs4 import BeautifulSoup
 
-from links import exceptions, linkdict, namedict
-
-def get_data(xml_path):
-    tree = ET.parse(xml_path)
-    root = tree.getroot()
-
-    # Find the <data> tag
-    data_tag = root.find("data")
-
-    # Extract the text content of the <data> tag
-    data_content = data_tag.text
-
-    # Convert HTML entities to literal characters
-    data = html.unescape(data_content)
-    return data
+from links import exceptions, linkdict
+from get_data import get_data
 
 def tohtml(xml_path, output_path):
     data = get_data(xml_path)
@@ -35,8 +18,8 @@ def tohtml(xml_path, output_path):
         if link[2].isdigit():
             replaced_links = re.sub(link[2], linkdict[link[2]], replaced_links)
 
-    replaced_links = re.sub(r'<li\sname="([^"]+)">\s*<a\shref="javascript:void\(0\)"\sonclick="outD\(([^\)]+)\)">([^<]+)</a>\s*</li>', r'<li name="\1"><a href="\2" class="btn btn-outline-primary btn-lg">\3</a></li>', replaced_links)
-    replaced_links = re.sub(r'<a\shref="javascript:void\(0\)"\s+onclick="([^"]+)"\sid="([^"]+)"\sname="([^"]+)"\stitle="([^"]+)">(?:<< )?([^<>]+)(?:>>)?</a>', r'<a href="\3" id="\2" class="btn btn-outline-primary mt-2">\5</a>', replaced_links)
+    replaced_links = re.sub(r'<li\sname="([^"]+)">\s*<a\shref="javascript:void\(0\)"\sonclick="outD\(([^\)]+)\)">([^<]+)</a>\s*</li>', r'<li name="\1"><a href="\2">\3</a></li>', replaced_links)
+    replaced_links = re.sub(r'<a\shref="javascript:void\(0\)"\s+onclick="([^"]+)"\sid="([^"]+)"\sname="([^"]+)"\stitle="([^"]+)">(?:<< )?([^<>]+)(?:>>)?</a>', r'<a href="\3" id="\2">\5</a>', replaced_links)
     
     # Hack to add .html to all links
     replaced_links = re.sub(r'href="/([^"]+)"', r'href="/\1.html"', replaced_links)

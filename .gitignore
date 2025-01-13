@@ -171,9 +171,7 @@ cython_debug/
 .pypirc
 
 sc-html/
-sc-markdown/
+sc-md/
 wt-html/
-wt-markdown/
-wt-xml/
+wt-md/
 wt-semantic/
-tipitaka/
