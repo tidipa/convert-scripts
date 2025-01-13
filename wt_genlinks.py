@@ -1,19 +1,17 @@
-from hmac import new
 from posixpath import basename
-import xml.etree.ElementTree as ET
-import html
 import os
 import re
 from bs4 import BeautifulSoup
+from get_data import get_data
 
 exceptions = ["259070", "259085", "271575", "266138"]
 
 linkdict = {
     "271577": "/tipitaka/2V/1",
     "271576": "/tipitaka/1V/1",
-    "262626": "/tipitaka/36P1/3/3.7/3.7.4/Nahetuduka/Catuvisaka",
+    "262626": "/tipitaka/36P1/3/3.7/3.7.4/Nahetuduka/Catuvisaka_sakamma",
     "265995": "/tipitaka/39P3/3/3.1/3.1.1/3.1.1.1--7/Paccayacatukka/Hetu",
-    "262625": "/tipitaka/36P1/3/3.7/3.7.4/Nahetuduka/Catuvisaka",
+    "262625": "/tipitaka/36P1/3/3.7/3.7.4/Nahetuduka/Catuvisaka_saupanissaya",
     "260803": "/tipitaka/37P1/12/12.7/12.7.4/12.7.4",
     "265990": "/tipitaka/39P3/2/2.6/2.6.1/2.6.1.1--7/Paccayacatukka/Hetu",
     "262557": "/tipitaka/36P1/2/2.7/2.7.4/Navippayuttaduka/Bavisaka",
@@ -139,26 +137,7 @@ namedict = {
 
 newlinkdict = {}
 newnamedict = {}
-
 pathdict = {}
-
-def get_data(xml_path):
-    tree = ET.parse(xml_path)
-    root = tree.getroot()
-
-    # Find the <data> tag
-    data_tag = root.find("data")
-    if data_tag is not None:
-        # Extract the text content of the <data> tag
-        data_content = data_tag.text
-
-        # Convert HTML entities to literal characters
-        data = html.unescape(data_content)
-        return data
-    else:
-        print(f"No <data> tag found in the XML file: {xml_path}")
-        return None
-
 
 if __name__ == "__main__":
     xml_dir = "World-Tipitaka/tipitaka"
