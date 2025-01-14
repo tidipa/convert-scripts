@@ -1,24 +1,25 @@
 import os
+from posixpath import basename
 import re
 from bs4 import BeautifulSoup, NavigableString
 
-from links import exceptions, linkdict
+from links import exceptions, linkdict, namedict
 from html_template import html_header, html_footer
 
 from get_data import get_data
 
-def tohtml(xml_path, output_path):
+def tohtml(link, xml_path, output_path):
     data = get_data(xml_path)
     replaced_links = data
 
     links = re.findall(r'onclick="outD\(([^\),]+)(?:,[^\)]+)?\)"', data)
-    for link in links:
-        replaced_links = re.sub(link, linkdict[link], replaced_links)
+    for l in links:
+        replaced_links = re.sub(l, linkdict[l], replaced_links)
 
     links = re.findall(r'<a\shref="javascript:void\(0\)"\s+onclick="([^"]+)"\sid="([^"]+)"\sname="([^"]+)"\stitle="([^"]+)">(?:<< )?([^<>]+)(?:>>)?</a>', replaced_links)
-    for link in links:
-        if link[2].isdigit():
-            replaced_links = re.sub(link[2], linkdict[link[2]], replaced_links)
+    for l in links:
+        if l[2].isdigit():
+            replaced_links = re.sub(l[2], linkdict[l[2]], replaced_links)
 
     replaced_links = re.sub(r'<li\sname="([^"]+)">\s*<a\shref="javascript:void\(0\)"\sonclick="outD\(([^\)]+)\)">([^<]+)</a>\s*</li>', r'<li name="\1"><a href="\2">\3</a></li>', replaced_links)
     replaced_links = re.sub(r'<a\shref="javascript:void\(0\)"\s+onclick="([^"]+)"\sid="([^"]+)"\sname="([^"]+)"\stitle="([^"]+)">(?:<< )?([^<>]+)(?:>>)?</a>', r'<a href="\3" id="\2">\5</a>', replaced_links)
@@ -26,10 +27,34 @@ def tohtml(xml_path, output_path):
     # Hack to add .html to all links
     replaced_links = re.sub(r'href="/([^"]+)"', r'href="/\1.html"', replaced_links)
 
-    html_output = html_header + replaced_links + html_footer
-
     # Pretty print the HTML content
-    soup = BeautifulSoup(html_output, 'html.parser')
+    soup = BeautifulSoup(replaced_links, 'html.parser')
+
+    for child in soup.children:
+        if type(child) is NavigableString:
+            if len(child.string.strip()) > 0:
+                print(f"Discarded extra text: {child.string}")
+                child.extract()
+
+    # Test if file has title, if not, add it
+    title = soup.find(class_='i')
+    if title is None:
+        if link is None:
+            newtitle = os.path.splitext(basename(xml_path))[0]
+        else:
+            newtitle = namedict[link]
+        print(f"No title, adding {newtitle} to {xml_path} -> {output_path}")
+        title = soup.new_tag('h1',class_='text-body-emphasis')
+        title.string = newtitle
+        b = soup.find(class_='b')
+        if b is None:
+            soup.insert(0, title)
+        else:
+            b.insert_after(title)
+        container = title.wrap(soup.new_tag('div'))
+        container['class'] = 'm-4 p-4 text-center bg-body-tertiary rounded-3'
+        div = container.wrap(soup.new_tag('div'))
+        div['class'] = 'container'
 
     # Modify breadcrumb to use Bootstrap
     breadcrumbs = soup.find_all(class_="b")
@@ -79,6 +104,18 @@ def tohtml(xml_path, output_path):
         italic.name = 'i'
         del italic['class']
 
+    firsts = soup.find_all(class_='firstLetter')
+    for first in firsts:
+        first.unwrap()
+
+    firsts = soup.find_all(class_='gathaQuote')
+    for first in firsts:
+        first.name = 'em'
+
+    rlaps = soup.find_all(class_='RLAP')
+    for rlap in rlaps:
+        rlap.string = '(' + rlap.string.strip() + ')'
+
     gs = soup.find_all(class_='G')
     for g in gs:
         g.name = 'i'
@@ -120,6 +157,11 @@ def tohtml(xml_path, output_path):
         center.name = 'p'
         center['class'] = 'text-center h3'
 
+    centers = soup.find_all(class_="SUMMARY")
+    for center in centers:
+        center.name = 'p'
+        center['class'] = 'text-center h3'
+
     # Convert footer
     tags = soup.find_all(class_='tn')
     for tag in tags:
@@ -154,12 +196,14 @@ def tohtml(xml_path, output_path):
             link['class'] = 'list-group-item list-group-item-action'
             del link['name']
 
-    pretty_html = soup.prettify()
+    soup.smooth()
+
+    html_output = html_header + soup.prettify() + html_footer
 
     os.makedirs(os.path.dirname(output_path), exist_ok=True)
     # Write the result to the output file
     with open(output_path, 'w') as output_file:
-        output_file.write(pretty_html)
+        output_file.write(html_output)
 
 if __name__ == "__main__":
     xml_dir = "World-Tipitaka/tipitaka"
@@ -173,7 +217,7 @@ if __name__ == "__main__":
         xml_path = os.path.join(xml_dir, "data", link + ".xml")
         output_path = os.path.join(dst_dir, path[1:] + ".html")
         # print(f"Converting {xml_path} to {output_path}")     
-        tohtml(xml_path, output_path)
+        tohtml(link, xml_path, output_path)
 
     print("Converting menus")
     for file in os.listdir(xml_dir):
@@ -181,4 +225,4 @@ if __name__ == "__main__":
             xml_path = os.path.join(xml_dir, file)
             output_path = os.path.join(dst_dir, "tipitaka", os.path.splitext(file)[0] + ".html")
             # print(f"Converting {xml_path} to {output_path}")
-            tohtml(xml_path, output_path)
+            tohtml(None, xml_path, output_path)

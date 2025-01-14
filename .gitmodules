@@ -7,3 +7,6 @@
 [submodule "tipitaka2500.github.io"]
 	path = tipitaka2500.github.io
 	url = https://github.com/tipitaka2500/tipitaka2500.github.io
+[submodule "tipitaka2500"]
+	path = tipitaka2500
+	url = https://github.com/tipitaka-md/tipitaka2500.git
