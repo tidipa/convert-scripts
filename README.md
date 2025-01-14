@@ -12,7 +12,11 @@ None of these take any arguments on command line
 
 * `wt_genlinks.py`: Create `links.py` containing semantic mapping between file numbers to semantic path
 * `tipitaka2500.py`: Create tipitaka2500.github.io/tipitaka from World Tipitaka
-* `wt2md.py`: Create Markdown files in `wt-md` from World Tipitaka
+* `wt2md.py`: Create Markdown files in `tipitaka2500` from World Tipitaka
+
+Experimental translation and summary using LLM - reads folders/files from command line
+
+* `wt2eng.py`: Translate Markdown files into English using Llama 3.3 70b.
 
 ## Utilities
 
