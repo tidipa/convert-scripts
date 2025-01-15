@@ -170,7 +170,7 @@ if __name__ == "__main__":
                         if path != linkdict[link[1]]:
                             print(f"link {link[1]}: {path} != {linkdict[link[1]]}")
                     linkdict.update({link[1]: path})
-                    namedict.update({link[1]: link[2]})
+                    namedict.update({link[1]: link[2].strip()})
                     if path in pathdict:
                         if link[1] != pathdict[path]:
                             print(f"path {path}: {link[1]} != {pathdict[path]}")
