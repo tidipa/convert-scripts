@@ -14,7 +14,7 @@ from tqdm import tqdm
 from mlx_lm import load, generate
 import frontmatter
 
-repo = "mlx-community/Llama-3.3-70B-Instruct-4bit"
+repo = "mlx-community/Llama-3.3-70B-Instruct-8bit"
 model, tokenizer = load(repo)
 
 OUTPUT_DIR="eng"

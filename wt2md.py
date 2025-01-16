@@ -42,7 +42,7 @@ def convert_section(s, name):
         elif c.name == "br":
             markdown += "  \n"
         elif "pN" in c["class"]:
-            markdown += f"{c.string.strip()}. "
+            markdown += f"{c.string.strip()}\\. "
         elif c.name == "table":
             tds = c.find_all("td")
             for td in tds:
@@ -52,7 +52,7 @@ def convert_section(s, name):
                             print("Extra table", tde.string)
                             # markdown += t(tde.string.strip()) + "  \n"
                     elif "pN" in tde["class"]:
-                        markdown += f"{tde.string.strip()}. "
+                        markdown += f"{tde.string.strip()}\\. "
                     elif "G" in tde["class"]:
                         # print(tde.prettify())
                         markdown += "_" + t(tde.string.strip()) + "_  \n"
