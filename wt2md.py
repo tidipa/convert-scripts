@@ -1,11 +1,17 @@
 import os
 import re
+import argparse
 from bs4 import BeautifulSoup, NavigableString
+from aksharamukha import transliterate
 from links import exceptions, linkdict, namedict
 from get_data import get_data
 
+# Options, set using command line
 output_frontmatter = False
 relative_links = True
+convert_script = None
+
+# Defaults
 input_dir = "World-Tipitaka/tipitaka"
 output_dir = "tipitaka2500"
 
@@ -14,6 +20,12 @@ def genpath(cur_dir, path):
         return os.path.relpath(path, cur_dir)
     else:
         return path
+
+def t(string):
+    if convert_script:
+        return transliterate.process('IAST', convert_script, string)
+    else:
+        return string
     
 def unhandled(item, name):
     print(f"Unhandled content in {name}:")
@@ -26,7 +38,7 @@ def convert_section(s, name):
     for c in s.children:
         if type(c) is NavigableString:
             if len(c.string.strip()) > 0:
-                markdown += c.string.strip() + "\n\n"
+                markdown += t(c.string.strip()) + "\n\n"
         elif c.name == "br":
             markdown += "  \n"
         elif "pN" in c["class"]:
@@ -37,12 +49,13 @@ def convert_section(s, name):
                 for tde in td.children:
                     if type(tde) is NavigableString:
                         if len(tde.string.strip()) > 0:
-                            markdown += tde.string + "  \n"
+                            print("Extra table", tde.string)
+                            # markdown += t(tde.string.strip()) + "  \n"
                     elif "pN" in tde["class"]:
                         markdown += f"{tde.string.strip()}. "
                     elif "G" in tde["class"]:
                         # print(tde.prettify())
-                        markdown += "_" + tde.string.strip() + "_  \n"
+                        markdown += "_" + t(tde.string.strip()) + "_  \n"
             markdown += "\n\n"
         else:
             unhandled(c, name)
@@ -171,15 +184,16 @@ def tomd(link, xml_path, output_path):
             else:
                 markdown += do_breadcrumb(cur_dir, child)
         elif "i" in child["class"]:
-            markdown += f"# {child.string.strip()}\n\n"
+            markdown += f"# {t(child.string.strip())}\n\n"
         elif "h" in child["class"]:
             if child.string is not None:
-                markdown += f"### {child.string.strip()}\n\n"
+                markdown += f"### {t(child.string.strip())}\n\n"
         elif "q" in child["class"]:
             for c in child.children:
                 if type(c) is NavigableString:
                     if len(c.string.strip()) > 0:
-                        markdown += c.string + "\n\n"
+                        print("Extra q", c.string)
+                        # markdown += t(c.string) + "\n\n"
                 elif "divNumber" in c["class"]:
                     markdown += f"({c.string.strip()})\n\n"
                 elif "p" in c["class"]:
@@ -228,6 +242,16 @@ def tomd(link, xml_path, output_path):
 
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Convert World Tipitaka to markdown')
+    parser.add_argument('output_dir', nargs='?', default=output_dir, help='The outdir directory to write the markdown.')
+    parser.add_argument('-r', '--no_relative_links', action='store_false', help='Use relative links.')
+    parser.add_argument('-f', '--frontmatter', action='store_true', help='Write frontmatter.')
+    parser.add_argument('-t', '--transliterate', help='Transliterate text into script.')
+    args = parser.parse_args()
+    output_dir = args.output_dir
+    relative_links = not args.no_relative_links
+    output_frontmatter = args.frontmatter
+    convert_script = args.transliterate
 
     print("Converting subdirs")
     for link, path in linkdict.items():
