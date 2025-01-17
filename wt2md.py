@@ -16,11 +16,17 @@ input_dir = "World-Tipitaka/tipitaka"
 output_dir = "tipitaka2500"
 
 def genpath(cur_dir, path):
-    if relative_links:
-        return os.path.relpath(path, cur_dir)
-    else:
+    if path == '/':
         return path
+    if relative_links:
+        relpath = os.path.relpath(path, cur_dir)
+        if relpath == '.':
+            relpath = path.replace('/tipitaka', '..')
+        return relpath + '.md'
+    else:
+        return path + '.md'
 
+# Transliterate if convert_script is true
 def t(string):
     if convert_script:
         return transliterate.process('IAST', convert_script, string)
@@ -67,7 +73,7 @@ def do_menu(cur_dir, menu):
     markdown = ""
     links = menu.find_all("a")
     for a in links:
-        markdown += f"* [{a.string.strip()}]({genpath(cur_dir, linkdict[re.sub(r'outD\(([0-9]+)\)', r'\1', a['onclick'])] + '.md')})\n"
+        markdown += f"* [{a.string.strip()}]({genpath(cur_dir, linkdict[re.sub(r'outD\(([0-9]+)\)', r'\1', a['onclick'])])})\n"
     markdown += "\n"
 
     return markdown
@@ -78,7 +84,7 @@ def do_breadcrumb(cur_dir, breadcrumb):
     return (
         " / ".join(
             [
-                f"[{crumb.string.strip()}]({genpath(cur_dir, crumb['href'] + '.md') if crumb['href'] != '/' else '/'})"
+                f"[{crumb.string.strip()}]({genpath(cur_dir, crumb['href'])})"
                 for crumb in crumbs
             ]
         )
@@ -92,7 +98,7 @@ def do_plcb(cur_dir, plcb):
     return (
         " / ".join(
             [
-                f"[{link['title'] if link['title'] else link['id']} ({namedict[link['name']] if link['name'].isdigit() else link['name']})]({genpath(cur_dir, (linkdict[link['name']] if link['name'].isdigit() else link['name']) + '.md')})"
+                f"[{link['title'] if link['title'] else link['id']} ({namedict[link['name']] if link['name'].isdigit() else link['name']})]({genpath(cur_dir, (linkdict[link['name']] if link['name'].isdigit() else link['name']))})"
                 for link in links
             ]
         )
@@ -108,17 +114,18 @@ def tomd(link, xml_path, output_path):
 
     if link is None:
         title = os.path.splitext(os.path.basename(xml_path))[0]
-        path = "/tipitaka/" + title + ".md"
+        link = title
+        path = "/tipitaka/" + title
     else:
         title = namedict[link]
-        path = linkdict[link] + ".md"
+        path = linkdict[link]
     cur_dir = os.path.dirname(path)
 
     if output_frontmatter:
         # Create frontmatter
         frontmatter = "---\n"
         frontmatter += f"title: {title}\n"
-        frontmatter += f"path: {path}\n"
+        frontmatter += f"path: {path + '.md'}\n"
         frontmatter += f"ref: {link}\n"
         frontmatter += "breadcrumbs:\n"
         breadcrumbs = soup.find_all(class_="b")
@@ -126,7 +133,7 @@ def tomd(link, xml_path, output_path):
             crumbs = breadcrumb("a")
             for crumb in crumbs:
                 frontmatter += f"  - name: {crumb.string.strip()}\n"
-                frontmatter += f"    link: {genpath(cur_dir, crumb['href'] + '.md')}\n"
+                frontmatter += f"    link: {genpath(cur_dir, crumb['href'])}\n"
         navfooter = soup.find_all(class_="plcb")
         for n in navfooter:
             links = n("a")
@@ -134,7 +141,7 @@ def tomd(link, xml_path, output_path):
                 href = l["name"]
                 if href.isdigit():
                     href = linkdict[href]
-                frontmatter += f"{l['id']}: {genpath(cur_dir, href + 'md')}\n"
+                frontmatter += f"{l['id']}: {genpath(cur_dir, href)}\n"
         frontmatter += "---\n"
 
     # Convert bespoke markup to markdown
@@ -187,7 +194,7 @@ def tomd(link, xml_path, output_path):
             markdown += f"# {t(child.string.strip())}\n\n"
         elif "h" in child["class"]:
             if child.string is not None:
-                markdown += f"### {t(child.string.strip())}\n\n"
+                markdown += f"* {t(child.string.strip())}\n\n"
         elif "q" in child["class"]:
             for c in child.children:
                 if type(c) is NavigableString:
