@@ -249,7 +249,7 @@ if __name__ == "__main__":
     parser.add_argument('-t', '--transliterate', help='Transliterate text into script.')
     args = parser.parse_args()
     output_dir = args.output_dir
-    relative_links = not args.no_relative_links
+    relative_links = args.no_relative_links
     output_frontmatter = args.frontmatter
     convert_script = args.transliterate
 
