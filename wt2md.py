@@ -19,10 +19,10 @@ def genpath(cur_dir, path):
     if path == '/':
         return path
     if relative_links:
-        relpath = os.path.relpath(path, cur_dir)
+        relpath = os.path.relpath(path + '.md', cur_dir)
         if relpath == '.':
             relpath = path.replace('/tipitaka', '..')
-        return relpath + '.md'
+        return relpath
     else:
         return path + '.md'
 
