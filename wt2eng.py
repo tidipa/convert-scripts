@@ -89,7 +89,7 @@ def process_path(path):
     base = os.path.splitext(path)[0]
     output = output_file(f"{base}.md", OUTPUT_DIR + '/')
     if os.path.isfile(output):
-        print(f"Skipping existing summary file [{output}]")
+        print(f"Skipping existing translation and summary file [{output}]")
         return       
 
     with open(path, 'r') as file:
