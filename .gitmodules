@@ -10,3 +10,6 @@
 [submodule "tipitaka2500"]
 	path = tipitaka2500
 	url = https://github.com/tipitaka-md/tipitaka2500.git
+[submodule "kaccayana"]
+	path = kaccayana
+	url = https://github.com/rukkhamula/kaccayana.git
