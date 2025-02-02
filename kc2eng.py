@@ -2,7 +2,6 @@
 #
 # Pali to English translator and summariser for Kaccayana grammar
 
-import sys
 import os
 import re
 from tqdm import tqdm
@@ -10,10 +9,11 @@ from mlx_lm import load, generate
 from mlx_lm.models.cache import make_prompt_cache
 
 INPUT_FILE = "kaccayana/docs/source/kaccayana.md"
-OUTPUT_DIR="kceng"
+OUTPUT_DIR="kceng-ds"
 MD_DIR="kc"
 
-repo = "mlx-community/Llama-3.3-70B-Instruct-4bit"
+repo = "mlx-community/DeepSeek-R1-Distill-Llama-70B-4bit"
+# repo = "mlx-community/Llama-3.3-70B-Instruct-4bit"
 model, tokenizer = load(repo)
 
 # Make the initial prompt cache for the model
@@ -28,9 +28,11 @@ You are an efficient and accurate Pali to English translator.
 ## Instructions
 
 Step 1. Read the entire text. This is a Pali grammar rule from the Kaccayana grammar.
-Step 2. Translate each line of text as accurately as possible. Do not insert any additional text or explanations.
-Step 3. Don't include preambles, postambles or explanations.
-Step 4. When you have finished translating, output the translation.
+Step 2. Translate word by word in each line.
+Step 3. Using each word, translate each line of text as accurately as possible in natural Engish considering the overall context of the text.
+Step 4. Do not insert any additional text or explanations.
+Step 5. When you have finished translating, output the translation.
+Step 6. Don't include preambles, postambles or explanations.
 """
 
 def slugify(value):
