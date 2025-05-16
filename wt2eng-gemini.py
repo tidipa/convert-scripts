@@ -26,7 +26,7 @@ from google.api_core import exceptions
 INPUT_DIR="tipitaka2500/tipitaka"
 OUTPUT_DIR="tipitaka2500-eng/staging"
 MODEL="models/gemini-2.5-pro-preview-05-06"
-MAX_TOKENS = 8192
+MAX_TOKENS = 65536
 TEMPERATURE=0.3
 
 SYSTEM = """
@@ -107,67 +107,82 @@ def divide_file_sections(filename):
 
 def output_md(filename):
     header, title, pali, footer = divide_file_sections(filename)
+    skip = False
+    if pali.strip() == "":
+        text = title
+        skip = True
+    else:
+        text = pali
+
     # fm = frontmatter.loads(markdown)
 
     with tqdm(total=4, desc="Translating") as pbar:
         pbar.set_description("Translating")
-        text = ""
-        while text is None or text == "":
+        translated = ""
+        while translated is None or translated == "":
             translation = generate_content(
                 model=MODEL,
-                contents=[pali],
+                contents=[text],
                 config=types.GenerateContentConfig(
                     system_instruction=SYSTEM,
                     max_output_tokens=MAX_TOKENS,
                     temperature=TEMPERATURE,
                 ),
             )
-            text = translation.text
+            translated = translation.text
 
+    
         pbar.update(1)
         pbar.set_description("Summary")
-        summary_prompt = "Given the following text, provide a summary of the key points in a single paragraph."
-        summary = generate_content(
-            model=MODEL,
-            contents=[summary_prompt, translation.text],
-            config=types.GenerateContentConfig(
-                max_output_tokens=MAX_TOKENS,
-                temperature=TEMPERATURE,
-            ),
-        )
+        if not skip:
+            summary_prompt = "Given the following text, provide a summary of the key points in a single paragraph."
+            summary = generate_content(
+                model=MODEL,
+                contents=[summary_prompt, translated],
+                config=types.GenerateContentConfig(
+                    max_output_tokens=MAX_TOKENS,
+                    temperature=TEMPERATURE,
+                ),
+            )
 
         pbar.update(1)
         pbar.set_description("Diagram")
-        diagram_prompt = "Given the following text, generate a mermaid diagram summaring the key points in the text. Choose an appropriate type of mermaid diagram. Output only the mermaid diagram without any preamble, postamble or explanations."
-        diagram = generate_content(
-            model=MODEL,
-            contents=[diagram_prompt, translation.text],
-            config=types.GenerateContentConfig(
-                max_output_tokens=MAX_TOKENS,
-                temperature=TEMPERATURE,
-            ),
-        )
+        if not skip:
+            diagram_prompt = "Given the following text, generate a mermaid diagram summaring the key points in the text. Choose an appropriate type of mermaid diagram. Output only the mermaid diagram without any preamble, postamble or explanations."
+            diagram = generate_content(
+                model=MODEL,
+                contents=[diagram_prompt, translated],
+                config=types.GenerateContentConfig(
+                    max_output_tokens=MAX_TOKENS,
+                    temperature=TEMPERATURE,
+                ),
+            )
 
         pbar.update(1)
         pbar.set_description("Commentary")
-        commentary_prompt = "Provide a short commentary on the text, explaining the major points. Adopt the position of a rationalist and explain the concept in non-spiritual terms using phenomenology as a basis. Don't add any preamble or explanation."
-        commentary = generate_content(
-            model=MODEL,
-            contents=[commentary_prompt, translation.text],
-            config=types.GenerateContentConfig(
-                max_output_tokens=MAX_TOKENS,
-                temperature=TEMPERATURE,
-            ),
-        )
+        if not skip:
+            commentary_prompt = "Provide a short commentary on the text, explaining the major points. Adopt the position of a rationalist and explain the concept in non-spiritual terms using phenomenology as a basis. Don't add any preamble or explanation."
+            commentary = generate_content(
+                model=MODEL,
+                contents=[commentary_prompt, translated],
+                config=types.GenerateContentConfig(
+                    max_output_tokens=MAX_TOKENS,
+                    temperature=TEMPERATURE,
+                ),
+            )
         pbar.update(1)
         pbar.set_description(filename)
 
     output = header + title
-    output += f"<details>\n<summary>Pali text</summary>\n{pali}</details>\n\n"
-    output += f"## Summary\n\n{summary.text}\n\n"
-    output += f"## Diagram\n\n{diagram.text}\n\n"
-    output += f"## Text\n\n{translation.text}\n\n"
-    output += f"## Commentary\n\n{commentary.text}\n\n"
+    if skip:
+        output += pali
+        output += translated
+    else:
+        output += f"<details>\n<summary>Pali text</summary>\n{pali}</details>\n\n"
+        output += f"## Summary\n\n{summary.text}\n\n"
+        output += f"## Diagram\n\n{diagram.text}\n\n"
+        output += f"## Text\n\n{translated}\n\n"
+        output += f"## Commentary\n\n{commentary.text}\n\n"
     output += footer
 
     # fm.content = output
@@ -184,7 +199,7 @@ def process_path(path):
     base = os.path.splitext(path)[0]
     output = output_file(f"{base}.md", OUTPUT_DIR + '/')
     if os.path.isfile(output):
-        print(f"Skipping existing translation and summary file [{output}]")
+        print(f"Skipping existing [{output}]")
         return
 
     with open(path, 'r') as file:
