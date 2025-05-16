@@ -170,4 +170,13 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-output/
+sc-html/
+sc-md/
+wt-html/
+wt-md/
+wt-semantic/
+eng/
+kceng/
+kc/
+rpeng/
+rp/

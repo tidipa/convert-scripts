@@ -13,7 +13,7 @@ INPUT_FILE = "kaccayana/docs/source/padarupasiddhi.md"
 OUTPUT_DIR="rpeng"
 MD_DIR="rp"
 
-repo = "mlx-community/Llama-3.3-70B-Instruct-4bit"
+repo = "mlx-community/Llama-3.3-70B-Instruct-8bit"
 model, tokenizer = load(repo)
 
 # Make the initial prompt cache for the model
@@ -105,7 +105,7 @@ def process_file(input_path):
                 print(f"Writing to {output_path}")
 
             # detect rule number and title
-            rule = re.match(r'^(\d+)\. \[\{ref\}`(\d+)\*?<(m\d+)>`\] ([^.]+)\.$', line)
+            rule = re.match(r'^(\d+)\. \[\{ref\}`([0-9]+)[*]?<(m\d+)>`\] ([^.]+)\.$', line)
             anchor = re.match(r'^\(([^)]+)\)=$', line)
             subsection = re.match(r'^__([^_]+)__$', line)
             if anchor:
