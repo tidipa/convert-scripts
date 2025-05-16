@@ -13,3 +13,6 @@
 [submodule "kaccayana"]
 	path = kaccayana
 	url = https://github.com/rukkhamula/kaccayana.git
+[submodule "tipitaka2500-eng"]
+	path = tipitaka2500-eng
+	url = https://github.com/ChristineTham/tipitaka2500-eng.git
